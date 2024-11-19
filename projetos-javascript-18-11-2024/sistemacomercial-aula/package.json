@@ -1,0 +1,16 @@
+{
+  "name": "projetos-javascript",
+  "version": "1.0.0",
+  "description": "* Formulario HTML\r     * Listar registro do banco de dados ou API\r     * Gravar registro no banco de dados ou API\r     * Alterar registro no banco de dados ou API\r     * Excluir registro no banco de dados ou API",
+  "main": "index.js",
+  "scripts": {
+    "api": "json-server --watch db/db.json --port 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}

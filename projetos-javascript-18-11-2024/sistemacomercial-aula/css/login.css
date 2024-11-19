@@ -1,0 +1,40 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    padding: 20px;
+    border-radius: 15px;
+    color: #fff;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,101,1) 40%, rgba(0,212,255,1) 100%);
+}
+
+.confirmar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:5px;    
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+.login form div label {
+    width: 80px;
+    text-align: right;
+}

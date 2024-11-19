@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>B2 System</title>
+    <link rel="stylesheet" href="css/loading.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/consulta.css">
+    
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Icone -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- NOVO BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <script src="js/login.js" defer async></script>
+    <link rel="stylesheet" href="css/modal-cadastro.css">
+    <link rel="stylesheet" href="css/vendas.css">
+    <link rel="stylesheet" href="css/modal-reset.css">
+
+    <link rel="stylesheet" href="css/global.css">
+</head>
+
+<body onload="loadVendas()">
+    <div class="content">
+        <div class="sidebar">
+            <div class="logo-details">
+                <!-- <i class='bx bxl-c-plus-plus'></i> -->
+                <i class='bx bx-analyse'></i>
+                <span class="logo_name">
+                    <img src="images/logo.png" alt="B2 System">
+                </span>
+            </div>
+            <ul class="nav-links" id="menu"></ul>
+        </div>
+
+        <section class="home-section">
+            <nav>
+                <div class="sidebar-button">
+                    <i class='bx bx-menu sidebarBtn'></i>
+                    <span class="dashboard">Vendas</span>
+                </div>
+                <div class="profile-details">
+                    <img src="images/profile.png" alt="">
+                    <span class="admin_name" id="email_usuario_logado">B2 System</span>
+                    <i class='bx bx-chevron-down'></i>
+
+                    <!-- DADOS DE USUARIO LOGADO AQUI -->
+                    <input type="hidden" id="usuario_logado">
+                </div>
+            </nav>
+
+            <div class="home-content">
+                <div class="overview-boxes"
+                    style="display: flex; justify-content: center;align-items: center;width: 100%;">
+                    <div class="box" style="width: 100%;background-color: aqua;">
+                        <div class="right-side">
+                            <div class="box-topic">Vendas</div>
+                            <div class=consulta>
+                                <div class="filtro-consulta">
+                                    <label for="filtroConsulta">Filtro:</label>
+                                    <div class="acoes-filtro">
+                                        <select name="filtroConsulta" id="filtroConsulta"
+                                            onChange="atualizaTipoConsulta()">
+                                            <option value="codigoConsulta" id="codigoConsulta" data-tipo="numerico"
+                                                selected>
+                                                Código
+                                            </option>
+                                            <option value="descricaoConsulta" id="descricaoConsulta" data-tipo="texto">
+                                                Descrição
+                                            </option>
+                                            <option value="dataCadastroConsulta" id="dataCadastroConsulta"
+                                                data-tipo="data">
+                                                Preço
+                                            </option>
+                                            <option value="dataCadastroConsulta" id="dataCadastroConsulta"
+                                                data-tipo="data">
+                                                Estoque
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <select name="operadorConsulta" id="operadorConsulta"
+                                        onchange="atualizaCampoSegundoValor()">
+                                    </select>
+
+                                    <input type="text" id="campoValor1" value="1">
+                                    <input type="text" id="campoValor2" style="display: none;">
+
+                                    <button class="btn btn-primary" onclick="executaConsulta()">Consultar</button>
+                                </div>
+
+                                <div class="acoes-consulta">
+                                    <button class="btn btn-success" onclick="incluirVenda()">Incluir</button>
+                                </div>
+
+                                <table class="table table-striped table-hover table-bordered caption-top">
+                                    <caption class="table-info text-center bg-primary"
+                                        style="color:aliceblue;font-size: 22px;">Vendas</caption>
+                                    <thead class="table-primary text-center">
+                                        <th>Código</th>
+                                        <th>clicodigo</th>
+                                        <th>vendedor</th>
+                                        <th>Cond. Pagto</th>
+                                        <th>Data Venda</th>
+                                        <th>Status Venda</th>
+                                        <th colspan="5" class="text-center">Ações</th>
+                                    </thead>
+                                    <tbody id="tabela-vendas">
+                                        <!-- SERA PREENCHIDO VIA JAVASCRIPT -->
+                                    </tbody>
+                                </table>
+
+                                <!-- MODAL INICIO -->
+                                <!-- <dialog class="modal" style="display: block;"> -->
+                                <dialog class="modal" id="dialogVenda">
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <section class="modal-header">
+                                            <h1 class="modal-title text-center">Venda</h1>
+                                            <button onclick="fecharModal()" class="btn btn-danger">
+                                                <span class="btn-close-modal">&times;</span>
+                                            </button>
+                                        </section>
+
+                                        <hr>
+
+                                        <div class="form">
+                                            <input type="hidden" id="ACAO" value="ACAO_INCLUSAO">
+                                            <div class="form-campos-venda">
+                                                <div class="form-campos-venda-1">
+                                                    <div class="campo">
+                                                        <label for="codigo">Código:</label>
+                                                        <input type="text" id="codigo" disabled size="10" value="2">
+                                                    </div>
+                                                    <div class="campo">
+                                                        <label for="cliente_id">Cliente:</label>
+                                                        <select name="cliente_id" id="cliente_id">
+                                                            <option value="1">Adriano</option>
+                                                        </select>
+                                                    </div>                                            
+                                                    <div class="campo">
+                                                        <label for="vendedor_id">Vendedor:</label>
+                                                        <select name="vendedor_id" id="vendedor_id">
+                                                            <option value="1">João da Silva</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="campo">
+                                                        <label for="condpagto_id">Cond.Pagt:</label>
+                                                        <select name="condpagto_id" id="condpagto_id">
+                                                            <option value="1">A Vista</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-campos-venda-2">
+                                                    <div class="campo">
+                                                        <label for="datavenda">Data Venda:</label>
+                                                        <input type="text" id="datavenda" disabled size="10" value="18/11/2024">
+                                                    </div>
+                                                    <div class="campo">
+                                                        <label for="totalvenda">Total Venda:</label>
+                                                        <input type="text" id="totalvenda" disabled size="20" value="0,00">
+                                                    </div>
+                                                    <br>
+                                                    <div class="campo">
+                                                        <label for="statusvenda">Status Venda:</label>
+                                                        <select name="statusvenda" id="statusvenda">
+                                                            <option value="ORCAMENTO" selected>ORCAMENTO</option>
+                                                            <option value="PRE-VENDA">PRE-VENDA</option>
+                                                            <option value="VENDA">VENDA</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <hr class="linha">
+
+                                            <div class="linha-add-produto">
+                                                <div class="campo">
+                                                    <label for="produto_id">Produto:</label>
+                                                    <input type="text" id="produto_id" value="2" onchange="carregaProduto()">
+                                                </div>
+                                                <div class="campo">
+                                                    <label for="descricao">Descrição:</label>
+                                                    <input type="text" id="descricao" disabled value="150">
+                                                </div>
+                                                <div class="campo">
+                                                    <label for="quantidade">Qtde:</label>
+                                                    <input type="text" id="quantidade" value="10" onchange="atualizaTotalItem()" onmouseenter="atualizaTotalItem()">
+                                                </div>
+                                                <div class="campo">
+                                                    <label for="precounitario">Unit.:</label>
+                                                    <input type="text" id="precounitario" value="15,00" disabled>
+                                                </div>
+                                                <div class="campo">
+                                                    <label for="total-item">Total:</label>
+                                                    <input type="text" id="total-item" value="150,00" disabled>
+                                                </div>
+                                                <div class="campo" id="div-btn-adicionar-item">
+                                                    <button id="btn-adicionar-item" class="btn btn-success"
+                                                        onclick="adicionarItem()">Adicionar</button>
+                                                </div>
+                                            </div>
+                                            <div class="item-venda">
+                                                <table
+                                                    class="table table-striped table-hover table-bordered caption-top">
+                                                    <thead class="table-primary text-center">
+                                                        <th>Código</th>
+                                                        <th>Descrição</th>
+                                                        <th>Qtde</th>
+                                                        <th>Unit.</th>
+                                                        <th>Total</th>
+                                                    </thead>
+                                                    <tbody id="tabela-item-venda">
+                                                        <!-- SERA PREENCHIDO VIA JAVASCRIPT-->                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="modal-footer">
+                                            <button class="btn btn-success"
+                                                onclick="confirmarModalVenda()">Confirmar</button>
+                                            <button class="btn btn-danger" onclick="fecharModal()">Fechar</button>
+                                        </div>
+                                    </div>
+                                </dialog>
+                                <!-- MODAL FIM -->
+
+                                
+                                <!-- MODAL INICIO - DETALHE DA VENDA -->
+                                <dialog class="modal" id="dialogVendaItem">
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <section class="modal-header">
+                                            <h1 class="modal-title text-center">Itens da Venda</h1>
+                                            <button onclick="fecharModalItem()" class="btn btn-danger">
+                                                <span class="btn-close-modal">&times;</span>
+                                            </button>
+                                        </section>
+
+                                        <hr>
+
+                                        <div class="form">
+                                            <input type="hidden" id="ACAO" value="ACAO_INCLUSAO">
+                                            <div class="form-campos-venda">
+                                                <div class="form-campos-venda-1">
+                                                    <div class="campo">
+                                                        <label for="codigo-item">Código:</label>
+                                                        <input type="text" id="codigo-item" disabled size="10" value="2">
+                                                    </div>
+                                                    <div class="campo">
+                                                        <label for="cliente_id-item">Cliente:</label>
+                                                        <select name="cliente_id-item" id="cliente_id-item">
+                                                            <option value="1">Adriano</option>
+                                                        </select>
+                                                    </div>                                            
+                                                    <div class="campo">
+                                                        <label for="vendedor_id-item">Vendedor:</label>
+                                                        <select name="vendedor_id-item" id="vendedor_id-item">
+                                                            <option value="1">João da Silva</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="campo">
+                                                        <label for="condpagto_id-item">Cond.Pagt:</label>
+                                                        <select name="condpagto_id-item" id="condpagto_id-item">
+                                                            <option value="1">A Vista</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-campos-venda-2" id="form-campos-venda-2">
+                                                    <div class="campo">
+                                                        <label for="datavenda-item">Data Venda:</label>
+                                                        <input type="text" id="datavenda-item" disabled size="10" value="14/11/2024">
+                                                    </div>
+                                                    <div class="campo">
+                                                        <label for="totalvenda-item">Total Venda:</label>
+                                                        <input type="text" id="totalvenda-item" disabled size="20" value="0,00">
+                                                    </div>
+                                                    <br>
+                                                    <div class="campo">
+                                                        <label for="statusvenda-item">Status Venda:</label>
+                                                        <select name="statusvenda-item" id="statusvenda-item">
+                                                            <option value="ORCAMENTO" selected>ORCAMENTO</option>
+                                                            <option value="PRE-VENDA">PRE-VENDA</option>
+                                                            <option value="VENDA">VENDA</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <hr class="linha">
+
+                                            <div class="linha-add-produto">
+                                                <div class="campo campo-consulta">
+                                                    <label for="produto_id">Produto:</label>
+                                                    <input type="text" id="produto_id-item" value="2" disabled>
+                                                </div>
+                                                <div class="campo">
+                                                    <label for="descricao">Descrição:</label>
+                                                    <input type="text" id="descricao" disabled value="150">
+                                                </div>
+                                                <div class="campo campo-consulta">
+                                                    <label for="quantidade">Qtde:</label>
+                                                    <input type="text" id="quantidade" value="10" disabled>
+                                                </div>
+                                                <div class="campo">
+                                                    <label for="precounitario">Unit.:</label>
+                                                    <input type="text" id="precounitario" value="15,00" disabled>
+                                                </div>
+                                                <div class="campo">
+                                                    <label for="total-item">Total:</label>
+                                                    <input type="text" id="total-item" value="150,00" disabled>
+                                                </div>
+                                                <div class="campo" id="div-btn-adicionar-item">
+                                                    <button id="btn-adicionar-item-detalhe" class="btn btn-success" disabled
+                                                        onclick="adicionarItem()">Adicionar</button>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="item-venda">
+                                                <table
+                                                    class="table table-striped table-hover table-bordered caption-top">
+                                                    <thead class="table-primary text-center">
+                                                        <th>Código</th>
+                                                        <th>Descrição</th>
+                                                        <th>Qtde</th>
+                                                        <th>Unit.</th>
+                                                        <th>Total</th>
+                                                    </thead>
+                                                    <tbody id="tabela-item-venda-detalhe">
+                                                        <!-- SERA PREENCHIDO VIA JAVASCRIPT-->                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="modal-footer">
+                                            <button class="btn btn-danger" onclick="fecharModalItem()">Fechar</button>
+                                        </div>
+                                    </div>
+                                </dialog>
+                                <!-- MODAL FIM -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script src="js/api.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/venda.js"></script>
+    <script src="js/global.js"></script> 
+
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".sidebarBtn");
+        sidebarBtn.onclick = function () {
+            sidebar.classList.toggle("active");
+            if (sidebar.classList.contains("active")) {
+                sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+            } else {
+                sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+            }
+        }
+
+        // simula o click para iniciar com a aba lateral escondida
+        sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+
+    </script>
+</body>
+
+</html>

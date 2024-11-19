@@ -1,0 +1,41 @@
+ul{
+    background: linear-gradient(to right, #0d603d, #25b7c4);
+    display: flex;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+ul li {
+    list-style: none;        
+    height: 100%;
+    padding: 10px;
+}
+
+ul li a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: aliceblue;
+}
+
+ul li:hover {
+    cursor: pointer;
+    background: linear-gradient(to right, #25c481, #25b7c4);
+    height: 100%;
+}
+
+.separator{
+    border-bottom: 1px solid #fff;
+    margin-bottom: 2px;
+}
+
+.usuario_logado{
+    width: 500px;
+    display: flex;
+    background-color: linear-gradient(to right, #25c481, #25b7c4);
+    justify-content: center;
+    align-items: center;
+}
+
+.usuario_logado label {
+    width: 150px;
+}
