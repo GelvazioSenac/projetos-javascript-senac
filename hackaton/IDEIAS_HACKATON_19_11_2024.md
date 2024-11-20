@@ -53,6 +53,10 @@ https://www.fotto.com.br/grip-brazilian-jiu-jitsu/e/26239/22610287
 criar sistema parecido com sistema abaixo:
 https://www.loveyuu.com
 
+* ideia 14
+ver layouts de dashboard
+https://dashboardsenac.vercel.app/
+
 # Ideias Adriano
 * ideia 01
 Criar um sistema que leia as conversas de whatsapp.
