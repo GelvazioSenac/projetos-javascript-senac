@@ -22,15 +22,18 @@ https://www.youtube.com/watch?v=WSRCR1xg3Jw
 * ideia 05
 * ideia de um ecommerce de algum produto ou info-produto
 
+* ideia 06
 * ideia de criar um microsaas como alertpix:
 https://www.alertpix.live/ 
 https://livepix.gg/
 https://livepix.gg/taxas - 5% de taxas 
 
+* ideia 07
 * app de financas pessoais - usando o layout "finance"
 file:///C:/xampp/htdocs/projetos-javascript-senac/finance/index.html
 algo semelhante a "mobills"
 
+* ideia 08
 * ideia rodar a IA generativa local e de graça 
 https://www.youtube.com/watch?v=HRqAJGh-tt0
 
@@ -49,9 +52,6 @@ https://www.fotto.com.br/grip-brazilian-jiu-jitsu/e/26239/22610287
 * ideia 13
 criar sistema parecido com sistema abaixo:
 https://www.loveyuu.com
-
-
-
 
 # Ideias Adriano
 * ideia 01
